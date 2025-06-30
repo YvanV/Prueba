@@ -1,8 +1,7 @@
 # Prueba
 
-1. Instalar el proyecto
-
--- Abrir sesion de terminal
+## 1. Instalar el proyecto
+### Abrir sesion de terminal
 
 git clone git@github.com:YvanV/Prueba.git
 
@@ -16,16 +15,16 @@ pip install -r requirements.txt
 python manage.py makemigrations
 python manage.py migrate
 
-2. Poblar datos
--- Demora 23 minutos aproximadamente
+## 2. Poblar datos
+### Demora 23 minutos aproximadamente
 
 python genera_datos.py
 
-3. Ejecutar proyecto
+## 3. Ejecutar proyecto
 
 python manage.py runserver
 
--- Acceder a la vista principal
+## 4. Acceder a la vista principal
 
 http://localhost:8000/
 
