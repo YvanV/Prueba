@@ -41,7 +41,10 @@ from django.utils import timezone
 import pytz
 
 maxInteractions = 500
+customersTotal = Customers.objects.all().count()
+customersProcessed = 0
 for customer in Customers.objects.all():
+    customersProcessed = customersProcessed + 1
     for _ in range(maxInteractions):
         interaction = Interactions(
             customer = customer,
@@ -49,6 +52,10 @@ for customer in Customers.objects.all():
             fecha_interaccion = fake_es.past_datetime(start_date='-5y', tzinfo=pytz.timezone('America/Lima'))
         )
         interaction.save()
+    print(".", end="", flush=True)
+    if customersProcessed % 50 == 0:
+        print(f"{customersProcessed}/{customersTotal}")
+
 print("Cantidad de interacciones:", Interactions.objects.all().count())
 
     
