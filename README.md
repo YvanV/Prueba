@@ -18,9 +18,9 @@ python manage.py makemigrations
 python manage.py migrate
 
 ## 2. Poblar datos
-#### Demora 23 minutos aproximadamente
+## Demora 1 minuto aproximadamente
 
-python genera_datos.py
+./genera_datos.sh
 
 ## 3. Ejecutar proyecto
 

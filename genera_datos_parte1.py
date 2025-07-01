@@ -1,9 +1,11 @@
+import csv
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Prueba.settings")
 import django
 django.setup()
 
 from Aplicacion.models import Users, Companies, Customers, Interactions
+import random
 
 from faker import Faker
 fake_es = Faker('es_ES')
@@ -23,8 +25,6 @@ for _ in range(maxCompanies):
     company.save()
 print("Cantidad de Companies:", Companies.objects.all().count())
 
-import random
-
 maxCustomers = 1000
 for _ in range(maxCustomers):
     customer = Customers(
@@ -43,19 +43,31 @@ import pytz
 maxInteractions = 500
 customersTotal = Customers.objects.all().count()
 customersProcessed = 0
+list_interactions =[]
 for customer in Customers.objects.all():
     customersProcessed = customersProcessed + 1
     for _ in range(maxInteractions):
+        """
         interaction = Interactions(
             customer = customer,
             tipo = random.choice(["Call", "Email", "SMS", "Facebook"]),
             fecha_interaccion = fake_es.past_datetime(start_date='-5y', tzinfo=pytz.timezone('America/Lima'))
         )
         interaction.save()
+        """
+        list_interactions.append([
+            random.choice(["Call", "Email", "SMS", "Facebook"]), 
+            fake_es.past_datetime(start_date='-5y', tzinfo=pytz.timezone('America/Lima')),
+            customer.id ])
     print(".", end="", flush=True)
-    if customersProcessed % 50 == 0:
+    if customersProcessed % 100 == 0:
         print(f"{customersProcessed}/{customersTotal}")
 
-print("Cantidad de interacciones:", Interactions.objects.all().count())
+with open('interactions.csv', 'w', newline='') as myfile:
+    # wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+    wr = csv.writer(myfile)
+    wr.writerows(list_interactions)
+
+# print("Cantidad de interacciones:", Interactions.objects.all().count())
 
     
